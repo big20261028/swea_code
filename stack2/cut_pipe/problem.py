@@ -10,26 +10,18 @@ sys.stdin = open("sample_input.txt", "r")
 T = int(input())
 for test_case in range(1,T+1):
     pipe = input()
+    stack = []
+    cnt = 0
+    text = ''
+    for idx,char in enumerate(pipe):
+        text += char
+        if char == '(':
+            stack.append(char)
+        elif char == ')':
+            if pipe[idx-1] == '(':
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                cnt += len(stack)
+            stack.pop()
 
 
 
