@@ -12,6 +12,7 @@ for test_case in range(1,T+1):
     pipe = input()
     stack = []
     cnt = 0
+<<<<<<< HEAD
     text = ''
     for idx,char in enumerate(pipe):
         text += char
@@ -19,6 +20,23 @@ for test_case in range(1,T+1):
             stack.append(char)
         elif char == ')':
             if pipe[idx-1] == '(':
+=======
+    for idx,char in enumerate(pipe):
+
+        if char == "(":
+            stack.append(char)
+        elif char == ')':
+            if pipe[idx-1] == "(":
+                cnt += len(stack)-1
+            else:
+                cnt += 1
+            stack.pop()
+        # print(stack)
+        # print(cnt)
+
+    print(f'#{test_case} {cnt}')
+
+>>>>>>> b41db1e7e788f147b0741eff51a383d99799d8ff
 
                 cnt += len(stack)
             stack.pop()
