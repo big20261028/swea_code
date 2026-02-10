@@ -51,7 +51,7 @@ for test_case in range(1,T+1):
                 if matrix[nx][ny] == 1: continue
 
                 if matrix[nx][ny] == 2:
-                    while (nt-1) % 3 != 2:  
+                    while (nt-1) % 3 != 2:
                         nt += 1
                     # if t % 3 == 0:
                     #     nt += 2
