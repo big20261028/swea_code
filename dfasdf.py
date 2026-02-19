@@ -1,0 +1,1 @@
+print(sorted(1,3,1,3))
