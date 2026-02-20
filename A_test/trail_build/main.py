@@ -32,7 +32,7 @@ def search_short_pass(deps,pos,flag,visited):
     #         else:
     #             # break 안걸리면 도달
     #             # 갈 수 있는 곳이 한곳도 없다
-    #             max_load = max(max_load, deps)
+    #             max_load = max_reward(max_load, deps)
     #             return
     # # 깎았을때
     # else:

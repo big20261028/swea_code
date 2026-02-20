@@ -20,7 +20,7 @@ for tc in range(1,T+1):
         x,y,c,d = map(int,input().split())
         cell_dict[(x,y)] = {
             'count' : c,
-            'max' : c,
+            'max_reward' : c,
             'dr' : dr_filter[d]
         }
 
@@ -37,9 +37,9 @@ for tc in range(1,T+1):
             if (nx,ny) in temp_dict:
                 # 이미 이동했던 미생물 군집의 최대값과 이동할 군집의 개수 비교
                 # 최대값 비교 이유는 이미 한번 합쳤던 군집이어도 바뀌게끔
-                if temp_dict[(nx,ny)]['max'] < cell['count']:
+                if temp_dict[(nx,ny)]['max_reward'] < cell['count']:
                     temp_dict[(nx,ny)]['dr'] = cell['dr']
-                    temp_dict[(nx,ny)]['max'] = cell['count']
+                    temp_dict[(nx,ny)]['max_reward'] = cell['count']
                 temp_dict[(nx, ny)]['count'] += cell['count']
             else:
                 # 만약 이동할 좌표가 약품셀이라면
@@ -51,7 +51,7 @@ for tc in range(1,T+1):
                         # 방향이 반대로 전환됨
                         temp_dict[(nx, ny)] = {
                             'count': count,
-                            'max': count,
+                            'max_reward': count,
                             'dr': (cell['dr']+2) % 4
                         }
                 # 약품셀이 아니면
@@ -59,7 +59,7 @@ for tc in range(1,T+1):
                     # 이동한 셀 데이터 추가
                     temp_dict[(nx,ny)] = {
                         'count' : cell['count'],
-                        'max' : cell['count'],
+                        'max_reward' : cell['count'],
                         'dr' : cell['dr']
                     }
         cell_dict = temp_dict

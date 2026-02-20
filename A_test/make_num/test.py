@@ -9,7 +9,7 @@ maps = {
  
 def permutations(oper_arr, number_q, n, N, values):
     if n == N-1:
-        values['max'] = max(values['max'], number_q[0])
+        values['max_reward'] = max(values['max_reward'], number_q[0])
         values['min'] = min(values['min'], number_q[0])
         return
     for i in range(4):
@@ -41,10 +41,10 @@ def solve():
         number_arr = list(map(int, input().split()))
         number_q = deque(number_arr)
         values = {
-            'max' : -float('inf'),
+            'max_reward' : -float('inf'),
             'min' : float('inf')
         }
         permutations(oper_arr, number_q, 0, N, values)
-        print(f"#{test_case} {values['max']-values['min']}")
+        print(f"#{test_case} {values['max_reward']-values['min']}")
  
 solve()
