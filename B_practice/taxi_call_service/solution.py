@@ -100,7 +100,7 @@ def pickup(mSX: int, mSY: int, mEX: int, mEY: int) -> int:
     buckets[tx // max_l][ty // max_l].remove(min_taxi_n)
     buckets[mEX // max_l][mEY // max_l].add(min_taxi_n)
 
-    # 최장 운송 경로 등록 (음수로 저장하여 최대 힙처럼 사용)
+    # 최장 운송 경로 등록
     heapq.heappush(most_data, (-update_custom, min_taxi_n))
 
     return min_taxi_n
