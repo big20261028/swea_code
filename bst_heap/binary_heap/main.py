@@ -1,63 +1,59 @@
 import sys
-sys.stdin = open('sample_input.txt', 'r')
+sys.stdin = open('sample_input.txt','r')
 
 class TreeNode:
-    def __init__(self,node):
-        self.key = node
+    def __init__(self,val):
+        self.val = val
         self.left = None
         self.right = None
 
-class BST:
+class BinaryTree:
     def __init__(self):
         self.root = None
 
-    def search(self, key):
-        return self._search(self.root, key)
-        pass
-
-    def _search(self, node, key):
-        if node == None or node.key == key:
-            return node
-
-        if key < node.key:
-            return self._search(node.left, key)
+    def add(self, val):
+        if self.root is None:
+            self.root = TreeNode(val)
         else:
-            return self._search(node.right, key)
+            self._add(self.root, val)
 
-    def insert(self, key):
-        if self.root == None:
-            self.root = key
-        else:
-            self._insert(self.root, key)
-
-    def _insert(self, node, key):
-        if key < node.key:
-            if node.left == None:
+    def _add(self, node, key):
+        if key < node.val:
+            if node.left is None:
                 node.left = TreeNode(key)
             else:
-                self._insert(node.left, key)
-        elif key > node.key:
-            if node.right == None:
+                self._add(node.left, key)
+        else:
+            if node.right is None:
                 node.right = TreeNode(key)
             else:
-                self._insert(node.right, key)
+                self._add(node.right, key)
+
+    def search(self, key):
+        return self._search(self.root, key)
+
+    def _search(self, node, key):
+        if node is None or node.val == key:
+            return node
+        if key < node.val:
+            return self._search(node.left, key)
+        return self._search(node.right, key)
 
     def delete(self, key):
-        self._delete(self.root, key)
+        self.root = self._delete(self.root, key)
 
-    def _minValueNode(self,node):
-        current = node
-        while current.left is not None:
-            current = current.left
-        return current
+    def _minValueNode(self, node):
+        while node.left is not None:
+            node = node.left
+        return node
 
     def _delete(self, node, key):
-        if node == None:
+        if node is None:
             return node
 
-        if key < node.key:
+        if key < node.val:
             node.left = self._delete(node.left, key)
-        elif key > node.key:
+        elif key > node.val:
             node.right = self._delete(node.right, key)
         else:
             if node.left is None:
@@ -66,15 +62,52 @@ class BST:
                 return node.left
 
             temp = self._minValueNode(node.right)
-            node.key = temp.key
-            node.right = self._delete(node.right, temp.key)
+            node.val = temp.val
+            node.right = self._delete(node.right, temp.val)
 
         return node
+
+class MinHeap:
+    def __init__(self):
+        self.heap = []
+
+    def heappush(self, item):
+        self.heap.append(item)
+        self._siftup(len(self.heap) - 1)
+
+    def _siftup(self, idx):
+        parent = (idx - 1) // 2
+        while idx > 0 and self.heap[idx] < self.heap[parent]:
+            self.heap[idx], self.heap[parent] = self.heap[parent], self.heap[idx]
+            idx = parent
+            parent = (idx - 1) // 2
+
+    def heappop(self):
+        if len(self.heap) == 0:
+            raise IndexError('힙이 비었습니다.')
+        if len(self.heap) == 1:
+            return self.heap.pop()
+        root = self.heap[0]
+        self.heap[0] = self.heap.pop()
+        self._siftdown(0)
+        return root
+
+    def _siftdown(self, idx):
+        n = len(self.heap)
+        largest = idx
+        left = 2 * idx + 1
+        right = 2 * idx + 2
+
+        if left < n and self.heap[left] > self.heap[largest]:
+           largest = left
+        if right < n and self.heap[right] > self.heap[largest]:
+            largest = right
+        if largest != idx:
+            self.heap[idx], self.heap[largest] = self.heap[largest], self.heap[idx]
+            self._siftdown(largest)
 
 
 T = int(input())
 for tc in range(1,T+1):
     N = int(input())
-
     arr = list(map(int,input().split()))
-
