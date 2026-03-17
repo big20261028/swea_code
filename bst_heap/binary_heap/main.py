@@ -106,8 +106,26 @@ class MinHeap:
             self.heap[idx], self.heap[largest] = self.heap[largest], self.heap[idx]
             self._siftdown(largest)
 
+    def last_node_ancestor(self):
+        return self._ancestor_sum(len(self.heap)-1, 0) - self.heap[len(self.heap)-1]
+
+    def _ancestor_sum(self, idx, total=0):
+        # 초기값은 가장 마지막 노드의 인덱스값
+        # 노드의 조상 노드는 인덱스 //2
+        if idx == 0:
+            return self.heap[idx]
+        total += self._ancestor_sum((idx-1)//2, total) # 5 2 0
+        return total + self.heap[idx]
+
 
 T = int(input())
 for tc in range(1,T+1):
     N = int(input())
     arr = list(map(int,input().split()))
+
+    heap = MinHeap()
+    for item in arr:
+        heap.heappush(item)
+
+    result = heap.last_node_ancestor()
+    print(f'#{tc} {result}')
