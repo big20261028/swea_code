@@ -1,20 +1,26 @@
 import sys
+
 sys.stdin = open('sample_input.txt', 'r')
 
-from collections import deque
 from heapq import heappush, heappop
 
 dxy = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
-def bfs(st_x, st_y, end_x, end_y):
-    min_fuel = [ [False] * N for _ in range(N) ]
-    min_fuel[0][0] = 0
 
-    # queue = deque()
-    # queue.append(( (st_x, st_y), 0 ))
+def bfs(st_x, st_y, end_x, end_y):
+    min_fuel = [[float('inf')] * N for _ in range(N)]
+    min_fuel[st_x][st_y] = 0
+
     hq = [(0, (st_x, st_y))]
+
     while hq:
         cost, (x, y) = heappop(hq)
+
+        if (x, y) == (end_x, end_y):
+            return cost
+
+        if min_fuel[x][y] < cost:
+            continue
 
         for dx, dy in dxy:
             nx, ny = x + dx, y + dy
@@ -26,16 +32,16 @@ def bfs(st_x, st_y, end_x, end_y):
                 need_cost += matrix[nx][ny] - matrix[x][y]
             next_cost = cost + need_cost
 
-            if (nx, ny) == (end_x, end_y):
-                return next_cost
-
-            if min_fuel[nx][ny] < need_cost:
-                continue
-
-
+            if next_cost < min_fuel[nx][ny]:
+                min_fuel[nx][ny] = next_cost
+                heappush(hq, (next_cost, (nx, ny)))
 
 
 T = int(input())
-for tc in range(1, T+1):
+for tc in range(1, T + 1):
     N = int(input())
-    matrix = [ list(map(int, input().split())) for _ in range(N) ]
+    matrix = [list(map(int, input().split())) for _ in range(N)]
+
+    result = bfs(0, 0, N - 1, N - 1)
+
+    print(f'#{tc} {result}')
