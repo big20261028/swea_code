@@ -68,8 +68,10 @@ def getLength(mSpot: int) -> int:
         for a_dist, a_roads in candidate_paths[key]:
             for b_dist, b_roads in candidate_paths[key]:
                 total_dist = a_dist + b_dist
-
-
-
+                if total_dist > FULL_DISTANCE: continue
+                for road_id in a_roads:
+                    if road_id in b_roads: break
+                else:
+                    max_cos_dist = max(max_cos_dist, total_dist)
 
     return max_cos_dist
